@@ -10,6 +10,8 @@ const db = mysql.createConnection (
     }
 );
 
+let testArray = [];
+
 db.promise().query('SELECT * FROM employee')
 .then(([rows, fields]) => {
     console.log(rows);
@@ -18,7 +20,7 @@ db.promise().query('SELECT * FROM employee')
 .then((rows) => {
     rows.forEach((r) => {
         const { id, first_name, last_name, role_id, manager_id } = r;
-        console.log(first_name);
+        testArray.push(`${last_name}, ${first_name}`);
     })
-    console.log(rows[3]);
+    console.log(testArray);
 });
