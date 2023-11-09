@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const { updateName } = require('./scripts/query');
 const { showDept } = require('./scripts/query');
+const { showRole } = require('./scripts/query');
 
 const mysql = require('mysql2');
 
@@ -38,7 +39,7 @@ const questions = [
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
     selection === 'View all departments' ? showDept()
-        : selection === 'View all roles' ? console.log('Here are your roles')
+        : selection === 'View all roles' ? showRole()
         : selection === 'View all employees' ? console.log('Here are your employees')
         : selection === 'Add a department' ? console.log('Adding a department')
         : selection === 'Add a role' ? console.log('Adding a role')
@@ -56,5 +57,3 @@ const init = async () => {
 };
 
 init();
-
-// db.query(`SELECT * FROM department`, (err, results) => console.table(results))

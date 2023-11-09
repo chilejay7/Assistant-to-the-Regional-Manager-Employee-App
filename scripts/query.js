@@ -30,7 +30,11 @@ const showDept = () => {
    db.query(`SELECT * FROM department`, (err, result) => console.table(result));
 };
 
-module.exports = { updateName, showDept };
+const showRole = () => {
+    db.query(`SELECT * FROM role`, (err, result) => console.table(result));
+}
+
+module.exports = { updateName, showDept, showRole };
 
 
 
