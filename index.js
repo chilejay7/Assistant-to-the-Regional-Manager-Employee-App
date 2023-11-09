@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const updateName = require('./scripts/query');
+const { updateName } = require('./scripts/query');
 
 // This array is used to present the main menu options through inquirer on start.
 const menuOptions = [
@@ -42,6 +42,8 @@ const init = async () => {
     console.log(menu);
 
     selectQuery(menu);
+
+    updateName('Tim');
 };
 
 init();

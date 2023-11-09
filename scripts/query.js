@@ -12,7 +12,7 @@ const db = mysql.createConnection (
 let testArray = [];
 
 const updateName = (name) => {
-    db.promise().query(`SELECT * FROM employee WHERE name=${name}`)
+    db.promise().query(`SELECT * FROM employee WHERE first_name='${name}'`)
     .then(([rows, fields]) => {
         console.log(rows);
         return rows;
@@ -26,4 +26,4 @@ const updateName = (name) => {
     });
 };
 
-module.exports = updateName;
+module.exports = { updateName };
