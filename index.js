@@ -1,5 +1,17 @@
 const inquirer = require('inquirer');
 const { updateName } = require('./scripts/query');
+const { showDept } = require('./scripts/query');
+
+const mysql = require('mysql2');
+
+const db = mysql.createConnection (
+    {
+        host: 'localhost',
+        user: 'root',
+        password: 'pass',
+        database: 'employees_db'
+    }
+);
 
 // This array is used to present the main menu options through inquirer on start.
 const menuOptions = [
@@ -17,7 +29,7 @@ const questions = [
     {
         type: 'list',
         message: 'Please select the operation you would like to complete',
-        name: 'menu',
+        name: 'menuSelection',
         choices: menuOptions,
     },
 ];
@@ -25,7 +37,7 @@ const questions = [
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
-    selection === 'View all departments' ? console.log('Here are your departments')
+    selection === 'View all departments' ? showDept()
         : selection === 'View all roles' ? console.log('Here are your roles')
         : selection === 'View all employees' ? console.log('Here are your employees')
         : selection === 'Add a department' ? console.log('Adding a department')
@@ -37,13 +49,12 @@ const selectQuery = (selection) => {
 
 // This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
 const init = async () => {
+    console.log(typeof showDept);
     const answers = await inquirer.prompt(questions);
-    const { menu } = answers
-    console.log(menu);
-
-    selectQuery(menu);
-
-    updateName('Tim');
+    const { menuSelection } = answers;
+    selectQuery(menuSelection);
 };
 
 init();
+
+// db.query(`SELECT * FROM department`, (err, results) => console.table(results))

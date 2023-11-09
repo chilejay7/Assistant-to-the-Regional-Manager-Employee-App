@@ -26,4 +26,15 @@ const updateName = (name) => {
     });
 };
 
-module.exports = { updateName };
+const showDept = () => {
+   db.query(`SELECT * FROM department`, (err, result) => console.table(result));
+};
+
+module.exports = { updateName, showDept };
+
+
+
+// db.promise().query(`SELECT * FROM department`)
+// .then((result) => {
+//     console.table(result)
+// });
