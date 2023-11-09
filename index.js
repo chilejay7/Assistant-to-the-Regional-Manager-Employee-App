@@ -16,9 +16,36 @@ const questions = [
     {
         type: 'list',
         message: 'Please select the operation you would like to complete',
-        name: 'Menu Options',
+        name: 'menu',
         choices: menuOptions,
     },
 ];
 
-inquirer.prompt(questions);
+const selectQuery = (selection) => {
+    selection === 'View all departments' ? console.log('Here are your departments')
+        : selection === 'View all roles' ? console.log('Here are your roles')
+        : selection === 'View all employees' ? console.log('Here are your employees')
+        : selection === 'Add a department' ? console.log('Adding a department')
+        : selection === 'Add a role' ? console.log('Adding a role')
+        : selection === 'Add an employee' ? console.log('Adding employee')
+        : selection === 'Update an employee role' ? console.log(`Updating employee's role`)
+        : console.log('Try again.')
+};
+
+// This initializes the application and runs the prompts.
+const init = async () => {
+    const answers = await inquirer.prompt(questions);
+    const { menu } = answers
+    console.log(menu);
+
+    selectQuery(menu);
+};
+
+init();
+
+// selection === 'View all roles' ? console.log('Here are your roles') : console.log('Try again.')
+// selection === 'View all employees' ? console.log('Here are your employees') : console.log('Try again.')
+// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
+// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
+// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
+// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
