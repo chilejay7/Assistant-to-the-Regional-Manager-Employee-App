@@ -42,10 +42,3 @@ const init = async () => {
 };
 
 init();
-
-// selection === 'View all roles' ? console.log('Here are your roles') : console.log('Try again.')
-// selection === 'View all employees' ? console.log('Here are your employees') : console.log('Try again.')
-// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
-// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
-// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
-// selection === 'View all departments' ? console.log('Here are your departments') : console.log('Try again.')
