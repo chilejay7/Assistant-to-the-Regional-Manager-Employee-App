@@ -34,11 +34,8 @@ const showRole = () => {
     db.query(`SELECT * FROM role`, (err, result) => console.table(result));
 }
 
-module.exports = { updateName, showDept, showRole };
+const showEmployees = () => {
+    db.query(`SELECT * FROM employee`, (err, result) => console.table(result));
+}
 
-
-
-// db.promise().query(`SELECT * FROM department`)
-// .then((result) => {
-//     console.table(result)
-// });
+module.exports = { updateName, showDept, showRole, showEmployees };

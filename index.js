@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const { updateName } = require('./scripts/query');
 const { showDept } = require('./scripts/query');
 const { showRole } = require('./scripts/query');
+const { showEmployees } = require('./scripts/query');
 
 const mysql = require('mysql2');
 
@@ -40,7 +41,7 @@ const questions = [
 const selectQuery = (selection) => {
     selection === 'View all departments' ? showDept()
         : selection === 'View all roles' ? showRole()
-        : selection === 'View all employees' ? console.log('Here are your employees')
+        : selection === 'View all employees' ? showEmployees()
         : selection === 'Add a department' ? console.log('Adding a department')
         : selection === 'Add a role' ? console.log('Adding a role')
         : selection === 'Add an employee' ? console.log('Adding employee')
