@@ -12,6 +12,7 @@ const menuOptions = [
 'Update an employee role',
 ];
 
+// The main menu prompts are presented to user's through this menu.
 const questions = [
     {
         type: 'list',
@@ -21,6 +22,8 @@ const questions = [
     },
 ];
 
+// Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
+// destructured object specified in the init function.
 const selectQuery = (selection) => {
     selection === 'View all departments' ? console.log('Here are your departments')
         : selection === 'View all roles' ? console.log('Here are your roles')
@@ -32,7 +35,7 @@ const selectQuery = (selection) => {
         : console.log('Try again.')
 };
 
-// This initializes the application and runs the prompts.
+// This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
 const init = async () => {
     const answers = await inquirer.prompt(questions);
     const { menu } = answers
