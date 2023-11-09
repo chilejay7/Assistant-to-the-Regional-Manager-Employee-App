@@ -26,6 +26,7 @@ const updateName = (name) => {
     });
 };
 
+// These functions are exported and called in the ternary operator of the index.js file based on the user's selection.  They display all data from a given table.
 const showDept = () => {
    db.query(`SELECT * FROM department`, (err, result) => console.table(result));
 };
