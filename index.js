@@ -1,9 +1,9 @@
 const inquirer = require('inquirer');
 const dotenv = require('dotenv');
 const { updateName } = require('./scripts/query');
-const { showDept, showRole } = require('./scripts/query');
+const { showDept, showRole, showEmployees } = require('./scripts/query');
 // const { showRole } = require('./scripts/query');
-const { showEmployees } = require('./scripts/query');
+// const { showEmployees } = require('./scripts/query');
 
 const mysql = require('mysql2');
 dotenv.config();
@@ -14,10 +14,6 @@ const db = mysql.createConnection (
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        // host: 'localhost',
-        // user: 'root',
-        // password: 'pass',
-        // database: 'employees_db',
     }
 );
 
