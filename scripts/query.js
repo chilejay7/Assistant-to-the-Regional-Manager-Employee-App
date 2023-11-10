@@ -29,16 +29,16 @@ const updateName = (name) => {
 };
 
 // These functions are exported and called in the ternary operator of the index.js file based on the user's selection.  They display all data from a given table.
-const showDept = () => {
+const showDeptQuery = () => {
    db.query(`SELECT * FROM department`, (err, result) => console.table(result));
 };
 
-const showRole = () => {
+const showRoleQuery = () => {
     db.query(`SELECT role.id, role.title, role.salary, department.name FROM role JOIN department ON role.department_id = department.id`, 
     (err, result) => console.table(result));
 }
 
-const showEmployees = () => {
+const showEmployeesQuery = () => {
     db.query(
     `SELECT employee.id, employee.first_name, employee.last_name, role.title, role_id, department.department_name, role.salary, employee.manager_id
         FROM employee 
@@ -47,4 +47,11 @@ const showEmployees = () => {
     (err, result) => console.table(result));
 }
 
-module.exports = { updateName, showDept, showRole, showEmployees };
+const addDeptQuery = (deptName) => {
+    db.query(
+        `INSERT INTO department (department_name)
+            VALUES ('${deptName}')`
+    )
+}
+
+module.exports = { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery };
