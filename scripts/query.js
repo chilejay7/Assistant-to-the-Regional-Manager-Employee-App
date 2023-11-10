@@ -1,4 +1,6 @@
 const mysql = require('mysql2');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const db = mysql.createConnection (
     {
@@ -32,7 +34,8 @@ const showDept = () => {
 };
 
 const showRole = () => {
-    db.query(`SELECT * FROM role`, (err, result) => console.table(result));
+    db.query(`SELECT role.id, role.title, role.salary, department.name FROM role JOIN department ON role.department_id = department.id`, 
+    (err, result) => console.table(result));
 }
 
 const showEmployees = () => {
