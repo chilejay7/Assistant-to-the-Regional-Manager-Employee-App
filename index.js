@@ -1,17 +1,23 @@
 const inquirer = require('inquirer');
+const dotenv = require('dotenv');
 const { updateName } = require('./scripts/query');
-const { showDept } = require('./scripts/query');
-const { showRole } = require('./scripts/query');
+const { showDept, showRole } = require('./scripts/query');
+// const { showRole } = require('./scripts/query');
 const { showEmployees } = require('./scripts/query');
 
 const mysql = require('mysql2');
+dotenv.config();
 
 const db = mysql.createConnection (
     {
-        host: 'localhost',
-        user: 'root',
-        password: 'pass',
-        database: 'employees_db'
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        // host: 'localhost',
+        // user: 'root',
+        // password: 'pass',
+        // database: 'employees_db',
     }
 );
 
@@ -36,13 +42,32 @@ const questions = [
     },
 ];
 
+const deptQuestions = [
+    {
+        type: 'input',
+        message: "Which department would you like to add?",
+        name: 'newDeptName',
+    },
+    {
+        type: 'input',
+        message: "Which department would you like to add?",
+        name: 'newDeptName',
+    },
+    {
+        type: 'input',
+        message: "Which department would you like to add?",
+        name: 'newDeptName',
+    },
+
+]
+
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
     selection === 'View all departments' ? showDept()
         : selection === 'View all roles' ? showRole()
         : selection === 'View all employees' ? showEmployees()
-        : selection === 'Add a department' ? console.log('Adding a department')
+        : selection === 'Add a department' ? inquirer.prompt(deptQuestions)
         : selection === 'Add a role' ? console.log('Adding a role')
         : selection === 'Add an employee' ? console.log('Adding employee')
         : selection === 'Update an employee role' ? console.log(`Updating employee's role`)
@@ -51,7 +76,7 @@ const selectQuery = (selection) => {
 
 // This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
 const init = async () => {
-    console.log(typeof showDept);
+    console.log(process.env.DB_DATABASE)
     const answers = await inquirer.prompt(questions);
     const { menuSelection } = answers;
     selectQuery(menuSelection);
