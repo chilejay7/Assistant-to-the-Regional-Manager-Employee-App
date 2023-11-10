@@ -39,7 +39,8 @@ const showRole = () => {
 }
 
 const showEmployees = () => {
-    db.query(`SELECT * FROM employee`, (err, result) => console.table(result));
+    db.query(`SELECT employee.id, first_name, last_name, role.title, role_id, role.salary, role.department_id, manager_id 
+    FROM employee JOIN role ON employee.role_id = role.id`, (err, result) => console.table(result));
 }
 
 module.exports = { updateName, showDept, showRole, showEmployees };
