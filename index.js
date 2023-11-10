@@ -2,8 +2,6 @@ const inquirer = require('inquirer');
 const dotenv = require('dotenv');
 const { updateName } = require('./scripts/query');
 const { showDept, showRole, showEmployees } = require('./scripts/query');
-// const { showRole } = require('./scripts/query');
-// const { showEmployees } = require('./scripts/query');
 
 const mysql = require('mysql2');
 dotenv.config();
