@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const dotenv = require('dotenv');
-const { updateName } = require('./scripts/query');
-const { showDept, showRole, showEmployees } = require('./scripts/query');
+// const { updateName } = require('./scripts/query');
+const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery } = require('./scripts/query');
 
 const mysql = require('mysql2');
 dotenv.config();
@@ -39,29 +39,25 @@ const questions = [
 const deptQuestions = [
     {
         type: 'input',
-        message: "Which department would you like to add?",
+        message: "What is the name of the department would you like to add?",
         name: 'newDeptName',
-    },
-    {
-        type: 'input',
-        message: "Which department would you like to add?",
-        name: 'newDeptName',
-    },
-    {
-        type: 'input',
-        message: "Which department would you like to add?",
-        name: 'newDeptName',
-    },
-
+    }
 ]
+
+const newDept = async () => {
+    const deptName = await inquirer.prompt(deptQuestions);
+    const { newDeptName } = deptName;
+    addDeptQuery(newDeptName);
+    showDeptQuery();
+}
 
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
-    selection === 'View all departments' ? showDept()
-        : selection === 'View all roles' ? showRole()
-        : selection === 'View all employees' ? showEmployees()
-        : selection === 'Add a department' ? inquirer.prompt(deptQuestions)
+    selection === 'View all departments' ? showDeptQuery()
+        : selection === 'View all roles' ? showRoleQuery()
+        : selection === 'View all employees' ? showEmployeesQuery()
+        : selection === 'Add a department' ? newDept()
         : selection === 'Add a role' ? console.log('Adding a role')
         : selection === 'Add an employee' ? console.log('Adding employee')
         : selection === 'Update an employee role' ? console.log(`Updating employee's role`)
