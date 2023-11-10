@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const dotenv = require('dotenv');
-// const { updateName } = require('./scripts/query');
-const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery } = require('./scripts/query');
+const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, addRoleQuery } = require('./scripts/query');
 
 const mysql = require('mysql2');
 dotenv.config();
@@ -39,8 +38,25 @@ const questions = [
 const deptQuestions = [
     {
         type: 'input',
-        message: "What is the name of the department would you like to add?",
+        message: "What is the name of the department you would like to add?",
         name: 'newDeptName',
+    }
+]
+const roleQuestions = [
+    {
+        type: 'input',
+        message: "What is the name of the role you would like to add?",
+        name: 'newRoleName',
+    },
+    {
+        type: 'input',
+        message: "What is the salary for this role?",
+        name: 'newRoleSalary',
+    },
+    {
+        type: 'input',
+        message: "Which department does this role belong to?",
+        name: 'newRoleDept',
     }
 ]
 
@@ -51,6 +67,13 @@ const newDept = async () => {
     showDeptQuery();
 }
 
+const addRole = async () => {
+    const newRole = await inquirer.prompt(roleQuestions);
+    const { newRoleName, newRoleSalary, newRoleDept } = newRole;
+    addRoleQuery(newRoleName, newRoleSalary, newRoleDept);
+    showRoleQuery();
+}
+
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
@@ -58,7 +81,7 @@ const selectQuery = (selection) => {
         : selection === 'View all roles' ? showRoleQuery()
         : selection === 'View all employees' ? showEmployeesQuery()
         : selection === 'Add a department' ? newDept()
-        : selection === 'Add a role' ? console.log('Adding a role')
+        : selection === 'Add a role' ? addRole()
         : selection === 'Add an employee' ? console.log('Adding employee')
         : selection === 'Update an employee role' ? console.log(`Updating employee's role`)
         : console.log('Try again.')

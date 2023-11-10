@@ -34,7 +34,7 @@ const showDeptQuery = () => {
 };
 
 const showRoleQuery = () => {
-    db.query(`SELECT role.id, role.title, role.salary, department.name FROM role JOIN department ON role.department_id = department.id`, 
+    db.query(`SELECT role.id, role.title, role.salary, department.department_name FROM role JOIN department ON role.department_id = department.id`, 
     (err, result) => console.table(result));
 }
 
@@ -54,6 +54,7 @@ const addDeptQuery = (deptName) => {
     )
 }
 
+
 const addEmployeeQuery = (firstName, lastName, role_id, manager_id ) => {
     db.query(
         `INSERT INTO employee (first_name, last_name, role_id, manager_id)
@@ -61,4 +62,12 @@ const addEmployeeQuery = (firstName, lastName, role_id, manager_id ) => {
     )
 }
 
-module.exports = { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, addEmployeeQuery };
+const addRoleQuery = (roleName, roleSalary, roleDept) => {
+    db.query(
+        `INSERT INTO role (title, salary, department_id)
+            VALUES ('${roleName}', ${roleSalary}, ${roleDept})`
+    )
+}
+
+module.exports = { showDeptQuery, showRoleQuery, showEmployeesQuery, 
+    addDeptQuery, addRoleQuery, addEmployeeQuery };
