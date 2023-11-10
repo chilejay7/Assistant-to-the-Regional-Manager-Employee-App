@@ -54,4 +54,11 @@ const addDeptQuery = (deptName) => {
     )
 }
 
-module.exports = { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery };
+const addEmployeeQuery = (firstName, lastName, role_id, manager_id ) => {
+    db.query(
+        `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+            VALUES ('${firstName}', '${lastName}', ${role_id}, ${manager_id})`
+    )
+}
+
+module.exports = { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, addEmployeeQuery };
