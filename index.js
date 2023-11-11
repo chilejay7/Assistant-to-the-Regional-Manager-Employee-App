@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const dotenv = require('dotenv');
-const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, addRoleQuery, addEmployeeQuery } = require('./scripts/query');
+const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, 
+    addRoleQuery, addEmployeeQuery, updateRoleQuery } = require('./scripts/query');
 
 const mysql = require('mysql2');
 dotenv.config();
@@ -64,17 +65,17 @@ const roleQuestions = [
 const newEmployeeQuestions = [
     {
         type: 'input',
-        message: "What is the first name of the employee you would like to add?",
+        message: "What is the first name of the employee?",
         name: 'firstName',
     },
     {
         type: 'input',
-        message: "What is the last name of the employee you would like to add?",
+        message: "What is the last name of the employee?",
         name: 'lastName',
     },
     {
         type: 'input',
-        message: "What is the id of the role of the new employee?",
+        message: "What is the id of the role of the employee?",
         name: 'roleId',
     },
     {
@@ -86,7 +87,7 @@ const newEmployeeQuestions = [
 
 const returnMenu = [
     {
-        type: 'list',
+        type: 'input',
         message: 'Return to main menu?',
         name: 'returnMenu',
     },
@@ -113,6 +114,20 @@ const addEmployee = async () => {
     showEmployeesQuery();
 };
 
+const updateEmployeeRole = async () => {
+    const newRole = await inquirer.prompt(newEmployeeQuestions);
+    const { firstName, lastName, roleId } = newRole;
+    updateRoleQuery(roleId, firstName, lastName);
+    showEmployeesQuery();
+};
+
+const mainMenuRecall = async () => {
+    const menuReturnQuestion = await inquirer.prompt(questions);
+    // const answers = await inquirer.prompt(questions);
+    // const { menuSelection } = answers;
+    // selectQuery(menuSelection);
+};
+
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
@@ -122,7 +137,7 @@ const selectQuery = (selection) => {
         : selection === 'Add a department' ? newDept()
         : selection === 'Add a role' ? addRole()
         : selection === 'Add an employee' ? addEmployee()
-        : selection === 'Update an employee role' ? console.log(`Updating employee's role`)
+        : selection === 'Update an employee role' ? updateEmployeeRole()
         : console.log('Try again.')
 };
 
