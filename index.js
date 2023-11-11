@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const dotenv = require('dotenv');
+const fs = require('fs');
 const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, 
     addRoleQuery, addEmployeeQuery, updateRoleQuery } = require('./scripts/query');
 
@@ -8,7 +9,7 @@ dotenv.config();
 
 const db = mysql.createConnection (
     {
-        host: process.env.DB_HOST,
+        host: 'localhost',
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
@@ -93,6 +94,11 @@ const returnMenu = [
     },
 ]
 
+const displayBanner = (fileName) => {
+    const banner = fs.readFileSync(fileName, 'ascii');
+    console.log(banner);
+}
+
 const newDept = async () => {
     const deptName = await inquirer.prompt(deptQuestions);
     const { newDeptName } = deptName;
@@ -143,6 +149,7 @@ const selectQuery = (selection) => {
 
 // This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
 const init = async () => {
+    displayBanner('banner.txt');
     console.log(process.env.DB_DATABASE)
     const answers = await inquirer.prompt(questions);
     const { menuSelection } = answers;
