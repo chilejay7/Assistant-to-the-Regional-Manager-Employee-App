@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const dotenv = require('dotenv');
-const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, addRoleQuery } = require('./scripts/query');
+const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery, addRoleQuery, addEmployeeQuery } = require('./scripts/query');
 
 const mysql = require('mysql2');
 dotenv.config();
@@ -41,7 +41,8 @@ const deptQuestions = [
         message: "What is the name of the department you would like to add?",
         name: 'newDeptName',
     }
-]
+];
+
 const roleQuestions = [
     {
         type: 'input',
@@ -58,20 +59,52 @@ const roleQuestions = [
         message: "Which department does this role belong to?",
         name: 'newRoleDept',
     }
-]
+];
+
+const newEmployeeQuestions = [
+    {
+        type: 'input',
+        message: "What is the first name of the employee you would like to add?",
+        name: 'firstName',
+    },
+    {
+        type: 'input',
+        message: "What is the last name of the employee you would like to add?",
+        name: 'lastName',
+    },
+    {
+        type: 'input',
+        message: "What is the id of the role of the new employee?",
+        name: 'roleId',
+    },
+    {
+        type: 'input',
+        message: "What is the id of this employee's manager?",
+        name: 'managerId',
+    }
+];
+
+
 
 const newDept = async () => {
     const deptName = await inquirer.prompt(deptQuestions);
     const { newDeptName } = deptName;
     addDeptQuery(newDeptName);
     showDeptQuery();
-}
+};
 
 const addRole = async () => {
     const newRole = await inquirer.prompt(roleQuestions);
     const { newRoleName, newRoleSalary, newRoleDept } = newRole;
     addRoleQuery(newRoleName, newRoleSalary, newRoleDept);
     showRoleQuery();
+};
+
+const addEmployee = async () => {
+    const newEmployee = await inquirer.prompt(newEmployeeQuestions);
+    const { firstName, lastName, roleId, managerId } = newEmployee;
+    addEmployeeQuery(firstName, lastName, roleId, managerId);
+    showEmployeesQuery();
 }
 
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
@@ -82,7 +115,7 @@ const selectQuery = (selection) => {
         : selection === 'View all employees' ? showEmployeesQuery()
         : selection === 'Add a department' ? newDept()
         : selection === 'Add a role' ? addRole()
-        : selection === 'Add an employee' ? console.log('Adding employee')
+        : selection === 'Add an employee' ? addEmployee()
         : selection === 'Update an employee role' ? console.log(`Updating employee's role`)
         : console.log('Try again.')
 };
