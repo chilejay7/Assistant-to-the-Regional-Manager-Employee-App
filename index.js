@@ -86,13 +86,11 @@ const newEmployeeQuestions = [
     },
 ];
 
-const returnMenu = [
-    {
-        type: 'input',
-        message: 'Return to main menu?',
-        name: 'returnMenu',
-    },
-]
+const menuPrompt = async () => {
+    const answers = await inquirer.prompt(questions);
+    const { menuSelection } = answers;
+    selectQuery(menuSelection);
+}
 
 const displayBanner = (fileName) => {
     const banner = fs.readFileSync(fileName, 'ascii');
@@ -150,7 +148,7 @@ const selectQuery = (selection) => {
 // This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
 const init = async () => {
     displayBanner('banner.txt');
-    console.log(process.env.DB_DATABASE)
+    // await menuPrompt();
     const answers = await inquirer.prompt(questions);
     const { menuSelection } = answers;
     selectQuery(menuSelection);
