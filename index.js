@@ -86,22 +86,38 @@ const newEmployeeQuestions = [
     },
 ];
 
+const displayBanner = (fileName) => {
+    const banner = fs.readFileSync(fileName, 'ascii');
+    console.log(banner);
+};
+
 const menuPrompt = async () => {
     const answers = await inquirer.prompt(questions);
     const { menuSelection } = answers;
     selectQuery(menuSelection);
-}
+};
 
-const displayBanner = (fileName) => {
-    const banner = fs.readFileSync(fileName, 'ascii');
-    console.log(banner);
-}
+const viewDepartments = () => {
+    showDeptQuery();
+    setTimeout(menuPrompt, 500);
+};
+
+const viewRoles = () => {
+    showRoleQuery();
+    setTimeout(menuPrompt, 500);
+};
+
+const viewEmployees = () => {
+    showEmployeesQuery();
+    setTimeout(menuPrompt, 500);
+};
 
 const newDept = async () => {
     const deptName = await inquirer.prompt(deptQuestions);
     const { newDeptName } = deptName;
     addDeptQuery(newDeptName);
     showDeptQuery();
+    setTimeout(menuPrompt, 500);
 };
 
 const addRole = async () => {
@@ -109,6 +125,7 @@ const addRole = async () => {
     const { newRoleName, newRoleSalary, newRoleDept } = newRole;
     addRoleQuery(newRoleName, newRoleSalary, newRoleDept);
     showRoleQuery();
+    setTimeout(menuPrompt, 500);
 };
 
 const addEmployee = async () => {
@@ -116,6 +133,7 @@ const addEmployee = async () => {
     const { firstName, lastName, roleId, managerId } = newEmployee;
     addEmployeeQuery(firstName, lastName, roleId, managerId);
     showEmployeesQuery();
+    setTimeout(menuPrompt, 500);
 };
 
 const updateEmployeeRole = async () => {
@@ -123,21 +141,15 @@ const updateEmployeeRole = async () => {
     const { firstName, lastName, roleId } = newRole;
     updateRoleQuery(roleId, firstName, lastName);
     showEmployeesQuery();
-};
-
-const mainMenuRecall = async () => {
-    const menuReturnQuestion = await inquirer.prompt(questions);
-    // const answers = await inquirer.prompt(questions);
-    // const { menuSelection } = answers;
-    // selectQuery(menuSelection);
+    setTimeout(menuPrompt, 500);
 };
 
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
 const selectQuery = (selection) => {
-    selection === 'View all departments' ? showDeptQuery()
-        : selection === 'View all roles' ? showRoleQuery()
-        : selection === 'View all employees' ? showEmployeesQuery()
+    selection === 'View all departments' ? viewDepartments()
+        : selection === 'View all roles' ? viewRoles()
+        : selection === 'View all employees' ? viewEmployees()
         : selection === 'Add a department' ? newDept()
         : selection === 'Add a role' ? addRole()
         : selection === 'Add an employee' ? addEmployee()
@@ -148,7 +160,6 @@ const selectQuery = (selection) => {
 // This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
 const init = async () => {
     displayBanner('banner.txt');
-    // await menuPrompt();
     const answers = await inquirer.prompt(questions);
     const { menuSelection } = answers;
     selectQuery(menuSelection);
