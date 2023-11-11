@@ -58,7 +58,7 @@ const roleQuestions = [
         type: 'input',
         message: "Which department does this role belong to?",
         name: 'newRoleDept',
-    }
+    },
 ];
 
 const newEmployeeQuestions = [
@@ -81,10 +81,16 @@ const newEmployeeQuestions = [
         type: 'input',
         message: "What is the id of this employee's manager?",
         name: 'managerId',
-    }
+    },
 ];
 
-
+const returnMenu = [
+    {
+        type: 'list',
+        message: 'Return to main menu?',
+        name: 'returnMenu',
+    },
+]
 
 const newDept = async () => {
     const deptName = await inquirer.prompt(deptQuestions);
@@ -105,7 +111,7 @@ const addEmployee = async () => {
     const { firstName, lastName, roleId, managerId } = newEmployee;
     addEmployeeQuery(firstName, lastName, roleId, managerId);
     showEmployeesQuery();
-}
+};
 
 // Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
 // destructured object specified in the init function.
