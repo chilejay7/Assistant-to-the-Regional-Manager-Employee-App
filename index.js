@@ -27,8 +27,8 @@ const menuOptions = [
 'Update an employee role',
 ];
 
-// The main menu prompts are presented to user's through this menu.
-const questions = [
+// The main menu prompts are presented to users through this menu.
+const mainPrompt = [
     {
         type: 'list',
         message: 'Please select the operation you would like to complete',
@@ -37,6 +37,7 @@ const questions = [
     },
 ];
 
+// This prompt is used to add a department.
 const deptQuestions = [
     {
         type: 'input',
@@ -45,6 +46,7 @@ const deptQuestions = [
     }
 ];
 
+// This prompt is used when updating an employee's role.
 const roleQuestions = [
     {
         type: 'input',
@@ -63,6 +65,7 @@ const roleQuestions = [
     },
 ];
 
+// This prompt is used for both the add employee and update employee role menus.
 const newEmployeeQuestions = [
     {
         type: 'input',
@@ -86,32 +89,43 @@ const newEmployeeQuestions = [
     },
 ];
 
+
+// This function uses the ascii image in the banner.txt file to display an iamge on start.
+// This function is called in init.
 const displayBanner = (fileName) => {
     const banner = fs.readFileSync(fileName, 'ascii');
     console.log(banner);
 };
 
+// This prompt is used to call the main menu prompts.  It used with a setTimeout function after each prompt.
+// The setTimeout function is used to display the main menu again after the user's selections.
 const menuPrompt = async () => {
-    const answers = await inquirer.prompt(questions);
+    const answers = await inquirer.prompt(mainPrompt);
     const { menuSelection } = answers;
     selectQuery(menuSelection);
 };
 
+// This is the prompt used to view all departments in the database.
+// setTimeout is used to allow the rendering of the table to complete before displaying the menu again.
 const viewDepartments = () => {
     showDeptQuery();
     setTimeout(menuPrompt, 500);
 };
 
+// This function is used to view the roles table.
 const viewRoles = () => {
     showRoleQuery();
     setTimeout(menuPrompt, 500);
 };
 
+// This function is used to view the employees table.
 const viewEmployees = () => {
     showEmployeesQuery();
     setTimeout(menuPrompt, 500);
 };
 
+// This function is used to add a new departemnt.  A new prompt is called to request the information needed for the new department.
+// The name given to the input prompts is destrucutred and passed to the query function.
 const newDept = async () => {
     const deptName = await inquirer.prompt(deptQuestions);
     const { newDeptName } = deptName;
@@ -120,6 +134,8 @@ const newDept = async () => {
     setTimeout(menuPrompt, 500);
 };
 
+// This function is used to add a new role.  A new prompt was added to request the information needed.
+// The name given to the input prompts is destrucutred and passed to the query function.
 const addRole = async () => {
     const newRole = await inquirer.prompt(roleQuestions);
     const { newRoleName, newRoleSalary, newRoleDept } = newRole;
@@ -128,6 +144,8 @@ const addRole = async () => {
     setTimeout(menuPrompt, 500);
 };
 
+// A new employee can be added using this function.
+// The names given to the input prompts are destrucutred and passed to the query function.
 const addEmployee = async () => {
     const newEmployee = await inquirer.prompt(newEmployeeQuestions);
     const { firstName, lastName, roleId, managerId } = newEmployee;
@@ -136,6 +154,8 @@ const addEmployee = async () => {
     setTimeout(menuPrompt, 500);
 };
 
+// An employee's role is updated through this function.
+// The names given to the input prompts are destrucutred and passed to the query function.
 const updateEmployeeRole = async () => {
     const newRole = await inquirer.prompt(newEmployeeQuestions);
     const { firstName, lastName, roleId } = newRole;
@@ -144,8 +164,9 @@ const updateEmployeeRole = async () => {
     setTimeout(menuPrompt, 500);
 };
 
-// Ternary operator built into a function used to evaluate the response in the menu.  The selection parameter will be passed as an argument from the
-// destructured object specified in the init function.
+// A ternary operator is built into a function used to evaluate the response in the main menu.
+// Based on the user's reponse, a query function is called to provide a table with the requested data.
+// The selection parameter will be passed as an argument from the destructured object specified in the init function.
 const selectQuery = (selection) => {
     selection === 'View all departments' ? viewDepartments()
         : selection === 'View all roles' ? viewRoles()
@@ -157,10 +178,11 @@ const selectQuery = (selection) => {
         : console.log('Try again.')
 };
 
-// This initializes the application and runs the prompts.  The answers object returned from the user's menu selection is destructured.
+// This initializes the application and runs the prompts.  
+// The menuSelection key that is destructured is the name given to the main menu inquirer prompt at the beginning of the script.
 const init = async () => {
     displayBanner('banner.txt');
-    const answers = await inquirer.prompt(questions);
+    const answers = await inquirer.prompt(mainPrompt);
     const { menuSelection } = answers;
     selectQuery(menuSelection);
 };
