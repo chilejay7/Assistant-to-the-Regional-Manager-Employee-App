@@ -20,4 +20,5 @@ VALUES
     ('Steve', 'Johnson', 502, 1003),
     ('Eric', 'Moody', 503, 1004),
     ('Alli', 'Burkholder', 504, 1005),
+    ('Michael', 'Scott', 503, 1004),
     ('Katelyn', 'Schumacher', 505, 1004);
