@@ -60,7 +60,7 @@ const roleQuestions = [
     },
     {
         type: 'input',
-        message: "Which department does this role belong to?",
+        message: "Which department does this role belong to (department id)?",
         name: 'newRoleDept',
     },
 ];
