@@ -7,14 +7,8 @@ const { showDeptQuery, showRoleQuery, showEmployeesQuery, addDeptQuery,
 const mysql = require('mysql2');
 dotenv.config();
 
-const db = mysql.createConnection (
-    {
-        host: 'localhost',
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
-    }
-);
+// The db variable was removed from this script as it is not needed. 
+// This connection is declared in the query.js script file.
 
 // This array is used to present the main menu options through inquirer on start.
 const menuOptions = [
